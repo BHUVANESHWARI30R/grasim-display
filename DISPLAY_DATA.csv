@@ -1,0 +1,6 @@
+
+
+;CS2_AQ;WD_AQ;H2S_AQA;RH_AQ ;NO2_AQ;NOX_AQ ;NO_AQ;AP_AQ;PM10_AQ ;PM25_AQ;RG_AQ;SO2_AQ;TC_AQ;WS_AQ;H2S_AQ;NO2_AQ;NO_AQ;NOX_AQ ;PM10_AQ ;PM25_AQ;SO2_AQ;CS2_AQ;H2S_AQA;NO2_AQ;NO_AQ;NOX_AQ ;PM10_AQ ;PM25_AQ;SO2_AQ;FLOW_STACK1;FLOW_STACK2;SPM_LKSTACK2;SPM_RBSTACK1;CS2_SPINNING STACK;FLOWcoalboiler;FLOWspinning;H2S_SPINNING STACK;PowerPlant_SPM380;SO2_ACID STACK;LimeKiln_Flow;LimeKiln_SPM;Limekiln_Co;Limekiln_NoX;Limekiln_So2;FLOW_COILBOILER;NOX_POWER_P;SO2_POWER_P;SPM_P_PLANT
+;ug/m3;degre;ug/m3;%;ug/m3;ug/m3;ug/m3;mmHg;ug/m3;ug/m3;m m;ug/m3;degreC;m/s;mg/m3;ug/m3;ug/m3;ug/m3;ppm;ug/m3;ug/m3;ug/m3;ug/m3;ug/m3;ug/m3;ug/m3;ug/m3;ug/m3;ug/m3;m3/hour;m3/hour;mg/Nm3;mg/Nm3;mg/Nm3;m3/hour;m3/hour;mg/Nm3;mg/Nm3;ppm;m3/hour;mg/Nm3;mg/Nm3;mg/Nm3;mg/Nm3;m3/hour;mg/m3;mg/m3;mg/Nm3
+2025-09-09 12:00:00+00:00;5.61;318.89;4.84;50.52;8.18;17.25;9.92;944.5;38.95;Invalid;0.00;5.34;25.50;0.06;6.10;7.99;6.00;14.97;48.17;31.69;5.99;Invalid;Invalid;Invalid;Invalid;Invalid;Invalid;Invalid;Invalid;42902;Invalid;38.90;42.84;Invalid;Invalid;Invalid;Invalid;Invalid;Invalid;12165.60;42.81;14.97;76.10;31.97;Invalid;165.38;523.07;Invalid;
+
