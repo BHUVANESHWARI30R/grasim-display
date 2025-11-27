@@ -5,8 +5,8 @@
   <title>LED Display - Air Quality Data</title>
   <style>
     body {
-      background: #000; /* Black background like LED */
-      color: #0f0; /* Default LED green */
+      background: #000;
+      color: #0f0;
       font-family: "Courier New", monospace;
       text-align: center;
       margin: 0;
@@ -16,27 +16,20 @@
       font-weight: bolder;
       font-size: 18px;
     }
-    .header {
-      margin-bottom: 10px;
-    }
     .company {
-      color: #ff0; /* Yellow */
-      font-weight: bold;
+      color: #ff0;
       font-size: 20px;
     }
     .display-title {
-      color: #0ff; /* Cyan */
-      margin-top: 5px;
+      color: #0ff;
       font-size: 15px;
     }
     .time {
-      color: #f00; /* Red clock */
-      margin-top: 5px;
+      color: #f00;
       font-size: 15px;
     }
     table {
       width: 100%;
-      margin: 0 auto;
       border-collapse: collapse;
     }
     th, td {
@@ -44,22 +37,21 @@
       border-bottom: 2px solid #222;
     }
     th {
-      color: #f00; /* Red headers */
+      color: #f00;
     }
     tr:nth-child(even) td {
-      color: #0ff; /* Cyan alternate rows */
+      color: #0ff;
     }
     tr:nth-child(odd) td {
-      color: #0f0; /* Green rows */
+      color: #0f0;
     }
   </style>
 </head>
+
 <body>
-  <div class="header">
-    <div class="company">GRASIM INDUSTRIES Pvt Ltd, HARIHAR</div>
-    <div class="display-title">AAQMS Display (Gate 1)</div>
-    <div class="time" id="clock"></div>
-  </div>
+  <div class="company">GRASIM INDUSTRIES Pvt Ltd, HARIHAR</div>
+  <div class="display-title">AAQMS Display (Gate 1)</div>
+  <div class="time" id="clock"></div>
 
   <table id="data-table">
     <thead>
@@ -73,59 +65,62 @@
   </table>
 
   <script>
-    // Clock updater
+    // Clock
     function updateClock() {
-      const now = new Date();
-      const options = { 
-        weekday: 'short', year: 'numeric', month: 'short', 
-        day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit',
-        hour12: true 
-      };
-      document.getElementById("clock").textContent = now.toLocaleString("en-IN", options);
+      document.getElementById("clock").textContent =
+        new Date().toLocaleString("en-IN", {
+          weekday: 'short', year: 'numeric', month: 'short',
+          day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: true
+        });
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // CSV Loader
+    // Online CSV URL
+    const CSV_URL = "https://raw.githubusercontent.com/BHUVANESHWARI30R/grasim-display/main/DISPLAY_DATA.csv";
+
+    // Load CSV
     async function loadCSV() {
-      const response = await fetch("data.csv?_=" + new Date().getTime()); 
+      const response = await fetch(CSV_URL + "?_=" + Date.now());
       const text = await response.text();
+
       const rows = text.trim().split("\n").map(r => r.split(";"));
 
-      const headers = rows[0].slice(1).map(h => h.trim()); // clean spaces
+      const headers = rows[0].slice(1).map(h => h.trim());
       const units = rows[1].slice(1).map(u => u.trim());
       const values = rows[2].slice(1).map(v => v.trim());
 
-      const wantedParams = ["CS2_AQ","H2S_AQA","NO2_AQ","NO_AQ","PM10_AQ","PM25_AQ","SO2_AQ","NOX_AQ"];
+      const wanted = ["CS2_AQ","H2S_AQA","NO2_AQ","NO_AQ","PM10_AQ","PM25_AQ","SO2_AQ","NOX_AQ"];
       const tableBody = document.querySelector("#data-table tbody");
       tableBody.innerHTML = "";
 
-      const latestValues = {};
-      const seen = new Set();
+      const data = {};
+      const used = new Set();
 
       headers.forEach((param, i) => {
-        const cleanParam = param.trim();
-        const value = values[i];
-        if (wantedParams.includes(cleanParam) && !seen.has(cleanParam)) {
-          if (!isNaN(parseFloat(value)) && value !== "" && value.toLowerCase() !== "invalid") {
-            latestValues[cleanParam] = { value: parseFloat(value).toFixed(2), unit: units[i] };
-            seen.add(cleanParam);
+        const p = param.trim();
+        const val = values[i];
+
+        if (wanted.includes(p) && !used.has(p)) {
+          if (!isNaN(parseFloat(val)) && val !== "" && val.toLowerCase() !== "invalid") {
+            data[p] = { value: parseFloat(val).toFixed(2), unit: units[i] };
+            used.add(p);
           }
         }
       });
 
-      // Display in wanted order
-      wantedParams.forEach(param => {
-        if (latestValues[param]) {
+      wanted.forEach(p => {
+        if (data[p]) {
           const row = document.createElement("tr");
-          row.innerHTML = `<td>${param}</td><td>${latestValues[param].value}</td><td>${latestValues[param].unit}</td>`;
+          row.innerHTML = `<td>${p}</td><td>${data[p].value}</td><td>${data[p].unit}</td>`;
           tableBody.appendChild(row);
         }
       });
     }
 
     loadCSV();
-    setInterval(loadCSV, 15000); 
+    setInterval(loadCSV, 15000);
   </script>
 </body>
 </html>
